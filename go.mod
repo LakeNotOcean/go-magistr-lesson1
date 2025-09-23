@@ -1,10 +1,10 @@
 module github.com/LakeNotOcean/go-magistr-lesson1
 
-go 1.25.1
+go 1.22.12
 
 replace (
-github.com/LakeNotOcean/go-magistr-lesson1/handlers => ./config
-github.com/LakeNotOcean/go-magistr-lesson1/config => ./handlers
+	github.com/LakeNotOcean/go-magistr-lesson1/config => ./handlers
+	github.com/LakeNotOcean/go-magistr-lesson1/handlers => ./config
 )
 
 require (
