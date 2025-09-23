@@ -21,7 +21,6 @@ func init() {
 		log.Fatal("Errors loading .env file")
 	}
 	appConfig = config.NewConfig()
-	log.Println("Initialization is completed")
 }
 
 func monitorTask(client *resty.Client, url string) error {
