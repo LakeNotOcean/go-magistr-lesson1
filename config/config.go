@@ -4,11 +4,13 @@ import "os"
 
 type Config struct {
 	MetricUrl string
+	Scheme    string
 }
 
 func NewConfig() *Config {
 	return &Config{
-		MetricUrl: getEnv("METRIC_URL", "srv.msk01.gigacorp.local"),
+		MetricUrl: getEnv("METRIC_URI", "srv.msk01.gigacorp.local"),
+		Scheme:    getEnv("SCHEME", "http"),
 	}
 }
 

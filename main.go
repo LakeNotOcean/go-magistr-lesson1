@@ -1,8 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"net/url"
 	"path"
+	"time"
 
 	"github.com/LakeNotOcean/go-magistr-lesson1/config"
 	"github.com/LakeNotOcean/go-magistr-lesson1/handlers"
@@ -13,18 +16,38 @@ import (
 var appConfig *config.Config
 
 func init() {
-	err := godotenv.Load(path.Join("configs", ".env"))
+	err := godotenv.Load(path.Join("configs", "url.env"))
 	if err != nil {
 		log.Fatal("Errors loading .env file")
 	}
 	appConfig = config.NewConfig()
 	log.Println("Initialization is completed")
 }
+
+func monitorTask(client *resty.Client, url string) error {
+	response, err := client.R().Get(url)
+	if err != nil {
+		return err
+	}
+	err = handlers.MonitoringHandler(response)
+	return err
+}
 func main() {
 	client := resty.New()
-	response, err := client.R().Get(appConfig.MetricUrl)
-	if err != nil {
-		log.Fatalln(err)
+	metricsUrl, _ := url.Parse(appConfig.MetricUrl)
+	metricsUrl.Scheme = appConfig.Scheme
+	urlString := metricsUrl.String()
+
+	errCount := 0
+	for {
+		err := monitorTask(client, urlString)
+		if err != nil {
+			errCount++
+		}
+		if errCount >= 3 {
+			fmt.Println("Unable to fetch server statistic")
+			errCount = 0
+		}
+		time.Sleep(1 * time.Second)
 	}
-	handlers.MonitoringHandler(response)
 }
