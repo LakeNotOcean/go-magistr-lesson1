@@ -48,14 +48,14 @@ func monitorLoadAverage(loadAverage int) {
 func monitorMemoryUsage(memorySize int, memoryUsage int) {
 	percent := int(math.Ceil(float64(memoryUsage) / float64(memorySize) * 100))
 	if percent > 80 {
-		fmt.Printf("Memory usage too high: %d\n", percent)
+		fmt.Printf("Memory usage too high: %d\\%%\n", percent)
 	}
 }
 
 const BYTES_IN_MEGABYTE = 1_000_000
 
 func monitorDiskUsage(diskSize int, diskUsage int) {
-	percent := int(math.Ceil(float64(memoryUsage) / float64(memorySize) * 100))
+	percent := int(math.Ceil(float64(diskSize) / float64(diskUsage) * 100))
 	if percent > 90 {
 		freeSpace := diskSize - diskUsage
 		fmt.Printf("Free disk space is too low: %d Mb left\n", freeSpace/BYTES_IN_MEGABYTE)
