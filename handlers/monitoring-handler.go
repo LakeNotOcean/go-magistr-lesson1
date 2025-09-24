@@ -52,23 +52,23 @@ func monitorMemoryUsage(memorySize int, memoryUsage int) {
 	}
 }
 
-const BYTES_IN_MEGABYTE = 1_048_576
+const BytesInMegabytes = 1_048_576
 
 func monitorDiskUsage(diskSize int, diskUsage int) {
 	percent := getPercent(diskUsage, diskSize)
 	if percent > 90 {
 		freeSpace := diskSize - diskUsage
-		fmt.Printf("Free disk space is too low: %d Mb left\n", freeSpace/BYTES_IN_MEGABYTE)
+		fmt.Printf("Free disk space is too low: %d Mb left\n", freeSpace/BytesInMegabytes)
 	}
 }
 
-const BYTES_IN_MEGABITS = 1_000_000
+const bytesInMegaBits = 1_000_000
 
 func monitorNetworkBandwidth(networkBandwith int, networkBandwithUsage int) {
 	percent := getPercent(networkBandwithUsage, networkBandwith)
 	if percent > 90 {
 		freeBandwidth := networkBandwith - networkBandwithUsage
-		fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", freeBandwidth/BYTES_IN_MEGABITS)
+		fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", freeBandwidth/bytesInMegaBits)
 	}
 }
 
