@@ -33,9 +33,9 @@ func monitorTask(client *resty.Client, url string) error {
 }
 func main() {
 	client := resty.New()
-	metricsUrl, _ := url.Parse(appConfig.MetricUrl)
-	metricsUrl.Scheme = appConfig.Scheme
-	urlString := metricsUrl.String()
+	metricsURL, _ := url.Parse(appConfig.MetricURL)
+	metricsURL.Scheme = appConfig.Scheme
+	urlString := metricsURL.String()
 
 	errCount := 0
 	for {
