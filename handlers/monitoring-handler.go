@@ -52,13 +52,13 @@ func monitorMemoryUsage(memorySize int, memoryUsage int) {
 	}
 }
 
-const BytesInMegabytes = 1_048_576
+const bytesInMegabytes = 1_048_576
 
 func monitorDiskUsage(diskSize int, diskUsage int) {
 	percent := getPercent(diskUsage, diskSize)
 	if percent > 90 {
 		freeSpace := diskSize - diskUsage
-		fmt.Printf("Free disk space is too low: %d Mb left\n", freeSpace/BytesInMegabytes)
+		fmt.Printf("Free disk space is too low: %d Mb left\n", freeSpace/bytesInMegabytes)
 	}
 }
 
