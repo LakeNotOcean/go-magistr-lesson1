@@ -46,28 +46,32 @@ func monitorLoadAverage(loadAverage int) {
 }
 
 func monitorMemoryUsage(memorySize int, memoryUsage int) {
-	percent := int(math.Ceil(float64(memoryUsage) / float64(memorySize) * 100))
+	percent := getPercent(memoryUsage, memorySize)
 	if percent > 80 {
 		fmt.Printf("Memory usage too high: %d%%\n", percent)
 	}
 }
 
-const BYTES_IN_MEGABYTE = 1_000_000
+const BYTES_IN_MEGABYTE = 1_048_576
 
 func monitorDiskUsage(diskSize int, diskUsage int) {
-	percent := int(math.Ceil(float64(diskUsage) / float64(diskSize) * 100))
+	percent := getPercent(diskUsage, diskSize)
 	if percent > 90 {
 		freeSpace := diskSize - diskUsage
 		fmt.Printf("Free disk space is too low: %d Mb left\n", freeSpace/BYTES_IN_MEGABYTE)
 	}
 }
 
-const BYTES_IN_MEGABITS = 125_000
+const BYTES_IN_MEGABITS = 1_000_000
 
 func monitorNetworkBandwidth(networkBandwith int, networkBandwithUsage int) {
-	percent := int(math.Ceil(float64(networkBandwithUsage) / float64(networkBandwith) * 100))
+	percent := getPercent(networkBandwithUsage, networkBandwith)
 	if percent > 90 {
 		freeBandwidth := networkBandwith - networkBandwithUsage
 		fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", freeBandwidth/BYTES_IN_MEGABITS)
 	}
+}
+
+func getPercent(a int, b int) int {
+	return int(math.Trunc(float64(a) / float64(b) * 100))
 }
